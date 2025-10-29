@@ -15,8 +15,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=14", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:size=14";
+static const char *fonts[]          = { "Liberation mono:size=14", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true" };
+static const char dmenufont[]       = "Liberation mono:size=14";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -73,6 +73,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgco
 static const char *termcmd[]  = { "st", NULL };
 static const char *broswecmd[]  = { "librewolf", NULL };
 static const char *emojicmd[]  = { "emoji.sh", NULL };
+static const char *networkcmd[]  = { "networkmanager_dmenu", NULL };
 
 #include <X11/XF86keysym.h>
 #include "movestack.c"
@@ -83,6 +84,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = broswecmd } },
 	{ MODKEY,                       XK_grave,  spawn,          {.v = emojicmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = networkcmd } },
 	{ MODKEY,                       XK_s,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -133,7 +135,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_l,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 	{ MODKEY,                       XK_minus, scratchpad_show, {0} },
 	{ MODKEY|ShiftMask,             XK_minus, scratchpad_hide, {0} },
 	{ MODKEY,                       XK_equal,scratchpad_remove,{0} },
