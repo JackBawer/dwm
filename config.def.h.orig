@@ -40,6 +40,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
+//	{ "eclipse",     NULL,       NULL,       0,         1,           1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
 };
 
@@ -84,6 +85,20 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *broswecmd[]  = { "librewolf", NULL };
 static const char *emojicmd[]  = { "emoji.sh", NULL };
 static const char *networkcmd[]  = { "networkmanager_dmenu", NULL };
+static const char *poweroffcmd[]  = { "systemctl", "poweroff", NULL };
+static const char *restartcmd[]  = { "systemctl", "reboot", NULL };
+static const char *configcmd[] = {
+    "st", "-e", "sh", "-c",
+    "cd /home/jack/.config/suckless/dwm && nvim config.def.h",
+    NULL
+};
+
+static const char *nvimcmd[] = {
+    "st", "-e", "sh", "-c",
+    "cd /home/jack/.config/nvim/lua/jack && nvim .",
+    NULL
+};
+
 
 #include <X11/XF86keysym.h>
 #include "movestack.c"
@@ -95,11 +110,15 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      spawn,          {.v = broswecmd } },
 	{ MODKEY,                       XK_grave,  spawn,          {.v = emojicmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = networkcmd } },
+	{ MODKEY|Mod1Mask,              XK_e,      spawn,          {.v = poweroffcmd } },
+	{ MODKEY|Mod1Mask,              XK_r,      spawn,          {.v = restartcmd } },
+	{ MODKEY,                       XK_a,      spawn,          {.v = configcmd } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = nvimcmd } },
 	{ MODKEY,                       XK_s,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_p,      cycleview,      {1} },
-	{ MODKEY|ShiftMask,             XK_n,      cycleview,      {0} },
+	{ MODKEY,                      XK_p,      cycleview,      {1} },
+	{ MODKEY,                      XK_n,      cycleview,      {0} },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_u,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -114,14 +133,14 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
 	{ MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	//{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
+	//{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
+	//{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
+	//{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
+	//{ MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } },
+	//{ MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } },
+	//{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
+	//{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
 	{ MODKEY,                       XK_z,      zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -144,6 +163,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|Mod1Mask,              XK_c,      movecenter,     {0} },
 	{ MODKEY,                       XK_x,     xrdb,           {.v = NULL } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
