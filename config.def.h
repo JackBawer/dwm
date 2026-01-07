@@ -1,6 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
-#define BROWSER "qutebrowser"
+#define BROWSER "chromium"
 
 
 /* appearance */
