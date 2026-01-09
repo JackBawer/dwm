@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#define BROWSER "chromium"
+
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
@@ -16,7 +18,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Liberation mono:size=14", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Liberation mono:size=14", "NotoColorEmoji:pixelsize=18:antialias=true:autohint=true" };
 static const char dmenufont[]       = "Liberation mono:size=14";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -82,7 +84,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *broswecmd[]  = { "librewolf", NULL };
+static const char *browsecmd[]  = { BROWSER, NULL };
 static const char *emojicmd[]  = { "emoji.sh", NULL };
 static const char *networkcmd[]  = { "networkmanager_dmenu", NULL };
 static const char *poweroffcmd[]  = { "systemctl", "poweroff", NULL };
@@ -98,6 +100,7 @@ static const char *nvimcmd[] = {
     "cd /home/jack/.config/nvim/lua/jack && nvim .",
     NULL
 };
+static const char *slockcmd[]  = { "slock", NULL };
 
 
 #include <X11/XF86keysym.h>
@@ -107,13 +110,17 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      spawn,          {.v = broswecmd } },
+	{ MODKEY,                       XK_b,      spawn,          {.v = browsecmd } },
 	{ MODKEY,                       XK_grave,  spawn,          {.v = emojicmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = networkcmd } },
 	{ MODKEY|Mod1Mask,              XK_e,      spawn,          {.v = poweroffcmd } },
 	{ MODKEY|Mod1Mask,              XK_r,      spawn,          {.v = restartcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = configcmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = nvimcmd } },
+	{ MODKEY|Mod1Mask,              XK_l,      spawn,          {.v = slockcmd } },
+	{ MODKEY,                       XK_Print,   spawn,         SHCMD("maim /home/jack/Pictures/screenshots/\"$(date +%d-%m-%Y-%T-%s).png\"") },
+	{ MODKEY|ShiftMask,             XK_Print,   spawn,         SHCMD("maim --select /home/jack/Pictures/screenshots/\"$(date +%d-%m-%Y-%T-%s).png\"") },
+	{ MODKEY|ControlMask,           XK_Print,   spawn,         SHCMD("maim --window \"$(xdotool getactivewindow)\" /home/jack/Pictures/screenshots/\"$(date +%d-%m-%Y-%T-%s).png\"") },
 	{ MODKEY,                       XK_s,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -145,6 +152,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
     { MODKEY|ShiftMask,             XK_q,      killunsel,      {0} },
+    { MODKEY|Mod1Mask,              XK_q,      killall,        {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
